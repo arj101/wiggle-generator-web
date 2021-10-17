@@ -107,7 +107,7 @@
 		<p id="output" contenteditable="false" >{output}</p>
 	</div>
 
-	<input type="text" id="copy-area" class="i-not-exists" value={output} readonly/>
+	<textarea id="copy-area" class="i-not-exists">{output}</textarea>
 	<a href="https://github.com/arj101/wiggle-generator-js">View source code on Github</a>
 </main>
 
