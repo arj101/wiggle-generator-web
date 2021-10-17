@@ -242,8 +242,6 @@
 
 		transition: all 100ms ease-in-out;
 		max-width: 60%;
-
-		backdrop-filter: blur(5px);
 	}
 
 	.wrapper:hover .tooltip {
