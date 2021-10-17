@@ -224,7 +224,7 @@
 
 	.tooltip {
 		color: white;
-		background-color: #3B745580;
+		background-color: #3B7455;
 		padding: 0.2rem;
 		padding-right: 0.5rem;
 		padding-left: 0.5rem;
@@ -244,6 +244,7 @@
 		transition: all 100ms ease-in-out;
 		max-width: 60%;
 
+		opacity: 0.8;
 		backdrop-filter: blur(10px);
 	}
 
