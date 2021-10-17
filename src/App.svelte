@@ -243,18 +243,18 @@
 		transition: all 100ms ease-in-out;
 		max-width: 60%;
 
-		backdrop-filter: blur(10px);
+		backdrop-filter: blur(5px);
 	}
 
 	.wrapper:hover .tooltip {
 		bottom: 80%;
-		opacity: 0.5;
+		opacity: 0.8;
 		pointer-events: all;
 	}
 
 	input:focus + .tooltip {
 		bottom: 80%;
-		opacity: 0.5;
+		opacity: 0.8;
 		pointer-events: all;
 	}
 
