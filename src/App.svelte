@@ -244,7 +244,7 @@
 		transition: all 100ms ease-in-out;
 		max-width: 60%;
 
-		opacity: 0.8;
+		opacity: 0.5;
 		backdrop-filter: blur(10px);
 	}
 
