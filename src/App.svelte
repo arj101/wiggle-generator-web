@@ -375,7 +375,7 @@
 	@media only screen and (max-width: 840px) {
 		main {
 			left: 0;
-			width: 100%;
+			width: calc(100% - 1rem);
 			padding-right: 0.5rem;
 			padding-left: 0.5rem;
 		}
