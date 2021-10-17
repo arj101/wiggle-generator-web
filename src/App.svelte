@@ -386,5 +386,17 @@
 			width: 90%;
 			left: 5%;
 		}
+
+		.tooltip {
+			max-width: 100%;
+		}
+
+		.wrapper:hover .tooltip {
+			bottom: 100%;
+		}
+
+		input:focus + .tooltip {
+			bottom: 100%;
+		}
 	}
 </style>
