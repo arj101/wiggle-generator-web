@@ -14,7 +14,7 @@ async function generateWiggle(text, rate, lineCount, lineLength) {
             let iStart = i;
             let maxCount = iStart + 750;
             while (i < maxCount && i < lineCount) {
-                output += ' '.repeat((Math.sin(x) * radius ) + radius) + text + '<br />';
+                output += ' '.repeat((Math.sin(x) * radius ) + radius) + text + '\n';
                 x += rate;
                 i++
             }
