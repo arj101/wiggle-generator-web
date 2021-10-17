@@ -244,7 +244,7 @@
 		transition: all 100ms ease-in-out;
 		max-width: 60%;
 
-		filter: blur(10px);
+		/* filter: blur(10px); */
 	}
 
 	.wrapper:hover .tooltip {
