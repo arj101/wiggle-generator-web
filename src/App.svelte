@@ -1,5 +1,5 @@
 <script>
-	  import { fade, fly } from "svelte/transition";
+	import { fade, fly } from "svelte/transition";
 	import generateWiggle from './wiggle.js';
 
 	let text = '';
@@ -14,10 +14,6 @@
 	let error = '';
 
 	$: _ = (async () => {
-
-		console.log(wiggleRate, lineCount, lineLength)
-
-
 		let validatedInput;
 
 		if (isNumber(wiggleRate) && isNumber(lineCount) && isNumber(lineLength)) {
@@ -167,7 +163,6 @@
 		position: relative;
 		background-color: rgba(0, 0, 0, 0);
 		color:rgb(255, 255, 255);
-		border: 0.2rem solid #afe619;
 		border-width: 0.2rem;
 		transition: all 300ms ease;
 		border: 2px solid #69DC9E;
@@ -229,7 +224,7 @@
 
 	.tooltip {
 		color: white;
-		background-color: #3B7455;
+		background-color: #3B745580;
 		padding: 0.2rem;
 		padding-right: 0.5rem;
 		padding-left: 0.5rem;
@@ -242,13 +237,14 @@
 		right: 0%;
 		bottom: 50%;
 		text-align:left;
-		/* z-index: 42; */
 
 		opacity: 0;
 		pointer-events: none;
 
 		transition: all 100ms ease-in-out;
 		max-width: 60%;
+
+		filter: blur(10px);
 	}
 
 	.wrapper:hover .tooltip {
