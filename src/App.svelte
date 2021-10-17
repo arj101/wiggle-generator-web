@@ -80,7 +80,7 @@
 					<div id="wiggle-rate-wrapper" class="wrapper">
 						<label for="wiggle-text">Wiggle rate</label>
 						<input type="text" bind:value={wiggleRate} name="wiggle-rate" id="wiggle-rate">
-						<span class="tooltip">wiggle = sin(x) * r; x += wiggle rate</span>
+						<span class="tooltip">Like wavelength</span>
 					</div>
 				</div>
 				<div class="split">
