@@ -104,7 +104,7 @@
 	</div>
 
 	<textarea id="copy-area" class="i-not-exists">{output}</textarea>
-	<a href="https://github.com/arj101/wiggle-generator-js">View source code on Github</a>
+	<a href="https://github.com/arj101/wiggle-generator-web">View source code on Github</a>
 </main>
 
 {#if error}
