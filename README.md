@@ -1,2 +1,2 @@
-# wiggle-generator-web
+# Wiggle Generator
 Generate awesome wiggly text
