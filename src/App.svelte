@@ -376,8 +376,8 @@
 		main {
 			left: 0;
 			width: 100%;
-			padding-right: 0%;
-			padding-left: 0%;
+			padding-right: 0.5rem;
+			padding-left: 0.5rem;
 		}
 		p {
 			margin-bottom: 1rem;
