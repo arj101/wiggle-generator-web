@@ -48,6 +48,7 @@ button {
 	color: #333;
 	background-color: #f4f4f4;
 	outline: none;
+	-webkit-tap-highlight-color: transparent;
 }
 
 button:disabled {
@@ -61,15 +62,3 @@ button:not(:disabled):active {
 button:focus {
 	border-color: #666;
 }
-/* 
-body::-webkit-scrollbar {
-  width: 0.6em;
-}
-
-body::-webkit-scrollbar-track {
-	background-color: rgba(31, 31, 31, 0.87);
-}
-
-body::-webkit-scrollbar-thumb {
-  background-color: #3B7455;
-} */
