@@ -12,7 +12,7 @@ async function generateWiggle(text, rate, lineCount, lineLength) {
 
         let appendProgressive = () => {
             let iStart = i;
-            let maxCount = iStart + 750;
+            let maxCount = iStart + 500;
             while (i < maxCount && i < lineCount) {
                 output += ' '.repeat((Math.sin(x) * radius ) + radius) + text + '\n';
                 x += rate;
