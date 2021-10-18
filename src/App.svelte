@@ -177,7 +177,7 @@
 		margin: 0;
 		left: calc(16vw - 2%);
 		top: 0;
-		transition: all 100ms ease;
+		transition: all 300ms ease;
 		font-family: 'Roboto', sans-serif;
 		padding-right: 2%;
 		padding-left: 2%;
