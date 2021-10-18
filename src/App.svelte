@@ -1,5 +1,6 @@
 <script>
 	import { fade, fly } from "svelte/transition";
+	import changeTheme from './theme.js';
 	import generateWiggle from './wiggle.js';
 
 	let text = '';
@@ -98,7 +99,7 @@
 			<input type="text" name="wiggle-text" id="wiggle-text" placeholder="wiggle" bind:value={text}>
 		</div>
 	</div>
-	<button type="button" name="button" on:click={copyOutput}>{copyButtonText}</button>
+	<button type="button" name="button" id="copy-button" on:click={copyOutput}>{copyButtonText}</button>
 	<div id="output-wrapper">
 		<p id="output" contenteditable="false" >{output}</p>
 	</div>
@@ -107,6 +108,10 @@
 	<a href="https://github.com/arj101/wiggle-generator-web">View source code on Github</a>
 </main>
 
+<button type="button" name="button" id="theme-switcher" on:click={changeTheme}>
+	<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000"><g><rect fill="none" height="24" width="24"/></g><g><g><g><g><path d="M12,22C6.49,22,2,17.51,2,12S6.49,2,12,2s10,4.04,10,9c0,3.31-2.69,6-6,6h-1.77c-0.28,0-0.5,0.22-0.5,0.5 c0,0.12,0.05,0.23,0.13,0.33c0.41,0.47,0.64,1.06,0.64,1.67C14.5,20.88,13.38,22,12,22z M12,4c-4.41,0-8,3.59-8,8s3.59,8,8,8 c0.28,0,0.5-0.22,0.5-0.5c0-0.16-0.08-0.28-0.14-0.35c-0.41-0.46-0.63-1.05-0.63-1.65c0-1.38,1.12-2.5,2.5-2.5H16 c2.21,0,4-1.79,4-4C20,7.14,16.41,4,12,4z"/><circle cx="6.5" cy="11.5" r="1.5"/><circle cx="9.5" cy="7.5" r="1.5"/><circle cx="14.5" cy="7.5" r="1.5"/><circle cx="17.5" cy="11.5" r="1.5"/></g></g></g></g></svg>
+</button>
+
 {#if error}
   <div id="error-indicator" in:fly={{ y: 100, duration: 150}} out:fly={{ y: 100, duration: 200}}>
 	<p>{error}</p>
@@ -114,19 +119,65 @@
 {/if}
 
 <style>
+	/*forgot color scheme url :skull:*/
+	:global(.theme-green) {
+		--bg: #3B7455;
+		--bg-2: #3B7455;
+		--bg-main: rgba(31, 31, 31, 0.87);
+		--text: rgb(255, 255, 255);
+		--text-2: rgb(255, 255, 255);
+		--heading-text: #69DC9E;
+		--input-border: #69DC9E;
+
+		--shadow-lowered: 0px 2px 4px rgba(0, 0, 0, 0.2);
+		--shadow-medium-high: 0px 4px 8px rgba(0, 0, 0, 0.4);
+		--shadow-raised: 0px 8px 15px rgba(0, 0, 0, 0.4);
+	}
+
+	/*https://coolors.co/ffc4eb-ffe4fa-f1dedc-e1dabd-abc798*/
+	:global(.theme-light) {
+		--bg: #BCB8B1;
+		--bg-2: #3A3430;
+		--bg-main: #F4F3EE;
+		--text: rgb(0, 0, 0);
+		--text-2: rgb(255, 255, 255);
+		--heading-text: rgb(0, 0, 0);
+		--input-border: #BCB8B1;
+
+		--shadow-lowered: 0px 2px 4px rgba(0, 0, 0, 0.15);
+		--shadow-medium-high: 0px 4px 8px rgba(0, 0, 0, 0.3);
+		--shadow-raised: 0px 8px 15px rgba(0, 0, 0, 0.3);
+	}
+
+	:global(.theme-dark) {
+		--bg: #0D0E0D;
+		--bg-2: #358471;
+		--bg-main: #111817/* #0D0E0D*/;
+		--text: #DCE1DE;
+		--text-2: #DCE1DE;
+		--heading-text: #DCE1DE;
+		--input-border: #358471;
+
+		--shadow-lowered: 0px 2px 4px rgba(0, 0, 0, 0.3);
+		--shadow-medium-high: 0px 4px 8px rgba(0, 0, 0, 0.6);
+		--shadow-raised: 0px 8px 15px rgba(0, 0, 0, 0.6);
+	}
+
 	:global(body) {
-		background-color: #3B7455;
+		background-color: var(--bg);
 		padding: 0;
+		transition: background-color 300ms ease;
+		transition-delay: 100ms;
 	}
 	main {
-		background-color: rgba(31, 31, 31, 0.87);
+		background-color: var(--bg-main);
 		position: absolute;
 		min-height: 100vh;
 		width:  68vw;
 		margin: 0;
 		left: calc(16vw - 2%);
 		top: 0;
-		transition: all 300ms ease;
+		transition: all 100ms ease;
 		font-family: 'Roboto', sans-serif;
 		padding-right: 2%;
 		padding-left: 2%;
@@ -138,7 +189,7 @@
 		margin-bottom: 0;
 		font-weight: 500;
 		font-size: 0.95rem;
-		color:#69DC9E;
+		color: var(--heading-text);
 		text-transform: uppercase;
 	}
 
@@ -149,11 +200,11 @@
 		margin-bottom: 3%;
 		font-weight: 300;
 		font-size: 0.95rem;
-		color: rgba(255, 255, 255, 0.856);
+		color: var(--text);
 	}
 
 	label {
-		color:rgb(255, 255, 255);
+		color: var(--text);
 		font-weight: 300;
 		font-size: 0.9rem;
 		margin-bottom: 2px;
@@ -162,25 +213,25 @@
 	input {
 		position: relative;
 		background-color: rgba(0, 0, 0, 0);
-		color:rgb(255, 255, 255);
+		color: var(--text);
 		border-width: 0.2rem;
 		transition: all 300ms ease;
-		border: 2px solid #69DC9E;
-		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+		border: 2px solid var(--input-border);
+		box-shadow: var(--shadow-lowered);
 		width: 100%;
-		outline: 1px solid #d6ffe900;
+		outline: 1px solid rgba(0, 0, 0, 0);
 	}
 
 
 	input:hover {
-		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+		box-shadow: var(--shadow-medium-high);
 	}
 
 	input:focus {
-		box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.4);
+		box-shadow: var(--shadow-raised);
 		transform: translateY(-2%);
-		border-color:rgba(0, 0, 0, 0);
-		outline: 1px solid #69DC9E;
+		border-color: rgba(0, 0, 0, 0);
+		outline: 1px solid var(--input-border);
 	}
 
 	#column {
@@ -223,15 +274,15 @@
 	}
 
 	.tooltip {
-		color: white;
-		background-color: #3B7455;
+		color: var(--text-2);
+		background-color: var(--bg-2);
 		padding: 0.2rem;
 		padding-right: 0.5rem;
 		padding-left: 0.5rem;
 		font-size: 0.8rem;
 		border-radius: 0.2rem;
-		box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.5);
-		
+		box-shadow: var(--shadow-raised);
+
 		position: absolute;
 		right: 0%;
 		bottom: 50%;
@@ -284,12 +335,12 @@
 	}
 
 	#output-wrapper::-webkit-scrollbar-track {
-		background-color: rgba(31, 31, 31);
+		background-color: var(--bg-main);
 		border-radius: 0.2em;
 	}
 
 	#output-wrapper::-webkit-scrollbar-thumb {
-	  background-color: #3B7455;
+	  background-color: var(--bg);
 	  border-radius: 0.2em;
 	}
 
@@ -304,7 +355,7 @@
 		transform: rotateX(-180deg);
 	}
 
-	button {
+	#copy-button {
 		font-weight: 500;
 		margin-left: 2%;
 		padding: 0.5rem;
@@ -313,16 +364,46 @@
 		outline: none;
 		border: 0;
 		border-radius: 4%;
-		background-color: #3B7455;
-		color: rgba(255, 255, 255, 1);
-		box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+		background-color: var(--bg-2);
+		color: var(--text-2);
+		box-shadow: var(--shadow-medium-high);
 		transition: all 80ms ease;
 		cursor: pointer;
 	}
 
-	button:active {
+	#copy-button:active {
 		transform: translateY(5%);
-		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+		box-shadow: var(--shadow-lowered);
+	}
+
+	#theme-switcher {
+		position: fixed;
+		bottom: 1rem;
+		left: calc(50% - 2rem);
+		background-color: var(--bg);
+		width: 4rem;
+		height: 4rem;
+		border: 0;
+		border-radius: 2rem;
+		opacity: 0.3;
+		backdrop-filter: blur(5px); /* Supported in Chrome 76 */
+
+		display: grid;
+		place-items: center;
+
+		cursor: pointer;
+
+		transition: all 200ms ease;
+	}
+
+	#theme-switcher svg {
+		width: 2rem;
+		height: auto;
+		fill: var(--text-2);
+	}
+
+	#theme-switcher:hover {
+		opacity: 0.7;
 	}
 
 	/* lol */
@@ -343,7 +424,7 @@
 		left: 25%;
 		bottom: 1rem;
 		background-color: #ff4d2e;
-		box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
+		box-shadow: var(--shadow-raised);
 		display: grid;
 		place-items: center;
 		/* padding: 0.8rem; */
@@ -357,7 +438,9 @@
 		margin-top: 0.8rem;
 		margin-bottom: 0.8rem;
 		text-align: center;
+		color: var(--text-2);
 	}
+
 	a {
 		font-size: 0.8rem;
 		font-weight: 400;
@@ -373,7 +456,7 @@
 			padding-left: 0.5rem;
 		}
 		p {
-			margin-bottom: 1rem;
+			margin-bottom: 2rem;
 		}
 		#error-indicator {
 			width: 90%;
