@@ -6,7 +6,7 @@
 	let text = '';
 	let wiggleRate = "0.2";
 	let lineLength = "50";
-	let lineCount = "500";
+	let lineCount = "100";
 
 	let output = '';
 
