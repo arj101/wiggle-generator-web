@@ -13,7 +13,26 @@ function changeTheme() {
 
     currTheme += 1;
     currTheme %= themes.length;
-    document.body.classList.add(themes[currTheme])
+    setTheme(themes[currTheme]);
 }
 
-export default changeTheme;
+function setTheme(themeName) {
+    const themes = ['theme-green', 'theme-dark', 'theme-light'];
+
+    for (let i = 0; i < themes.length; i++) {
+        if (document.body.classList.contains(themes[i])) {
+            document.body.classList.remove(themes[i])
+        }
+    }
+
+    if (themeName && themes.indexOf(themeName) >= 0 && themes.indexOf(themeName) < themes.length) {
+        document.body.classList.add(themeName)
+        localStorage.setItem('theme', themeName)
+    } else if (localStorage.getItem('theme')) {
+        document.body.classList.add(localStorage.getItem('theme'))
+    } else {
+        setTheme('theme-green')
+    }
+}
+
+module.exports = {setTheme, changeTheme}

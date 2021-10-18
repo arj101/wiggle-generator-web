@@ -1,7 +1,9 @@
 <script>
 	import { fade, fly } from "svelte/transition";
-	import changeTheme from './theme.js';
+	import { setTheme, changeTheme } from './theme.js';
 	import generateWiggle from './wiggle.js';
+
+	setTheme();
 
 	let text = '';
 	let wiggleRate = "0.2";
@@ -399,7 +401,7 @@
 	#theme-switcher svg {
 		width: 2rem;
 		height: auto;
-		fill: var(--text-2);
+		fill: var(--text);
 	}
 
 	#theme-switcher:hover {
