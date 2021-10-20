@@ -38,6 +38,7 @@ input, button, select, textarea {
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 2px;
+        -webkit-tap-highlight-color: transparent;
 }
 
 input:disabled {
@@ -48,7 +49,6 @@ button {
 	color: #333;
 	background-color: #f4f4f4;
 	outline: none;
-	-webkit-tap-highlight-color: transparent;
 }
 
 button:disabled {
