@@ -30,8 +30,17 @@ function setTheme(themeName) {
         localStorage.setItem('theme', themeName)
     } else if (localStorage.getItem('theme')) {
         document.body.classList.add(localStorage.getItem('theme'))
+        setTimeout(() => {
+            document.body.style.transition = 'background-color 300ms ease';
+            document.body.style.transitionDelay = '100ms';
+        }, 0);
     } else {
-        setTheme('theme-green')
+        document.body.classList.add('theme-green');
+        localStorage.setItem('theme', 'theme-green');
+        setTimeout(() => {
+            document.body.style.transition = 'background-color 300ms ease';
+            document.body.style.transitionDelay = '100ms';
+        }, 0);
     }
 }
 

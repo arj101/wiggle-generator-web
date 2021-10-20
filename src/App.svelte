@@ -3,12 +3,33 @@
 	import { setTheme, changeTheme } from './theme.js';
 	import generateWiggle from './wiggle.js';
 
-	setTheme();
-
 	let text = '';
 	let wiggleRate = "0.2";
 	let lineLength = "50";
 	let lineCount = "100";
+	let spamMode = false;
+
+	let prevLineCount = "100"
+	let prevWaveCount =  "1"
+
+	let lineCountInputLabel = "Line Count";
+	let lineCountHelperText = "Number of lines of generated text";
+
+	function spamModeToggle() {
+		spamMode = !spamMode;
+		if (spamMode) {
+			prevLineCount = lineCount;
+			lineCount = prevWaveCount;
+			lineCountInputLabel = 'Wave count'
+			lineCountHelperText = 'Number of wave cycles'
+		}
+		else {
+			prevWaveCount = lineCount;
+		    lineCount = prevLineCount;
+			lineCountInputLabel = 'Line count'
+			lineCountHelperText = 'Number of lines of generated text'
+		}
+	}
 
 	let output = '';
 
@@ -18,7 +39,7 @@
 
 	$: _ = (async () => {
 		let validatedInput;
-
+		
 		if (isNumber(wiggleRate) && isNumber(lineCount) && isNumber(lineLength)) {
 			const wiggleRateNum = parseFloat(wiggleRate);
 			const lineCountNum = parseInt(lineCount);
@@ -33,7 +54,7 @@
 			if (!isNumber(wiggleRate)) {
 				error = "Wiggle rate is not a valid positive number"
 			} else if (!isNumber(lineCount)) {
-				error = "Line count is not a valid positive number"
+				error = `${lineCountInputLabel} is not a valid positive number`
 			} else if (!isNumber(lineLength)) {
 				error = "Line length is not a valid positive number"
 			}
@@ -41,7 +62,7 @@
 
 		if (validatedInput) {
 			copyButtonText = "Copy text";
-			output = await generateWiggle(text ? text : 'wiggle', validatedInput.wiggleRateNum, validatedInput.lineCountNum, validatedInput.lineLengthNum);
+			output = await generateWiggle(text ? text : 'wiggle', validatedInput.wiggleRateNum, validatedInput.lineCountNum, validatedInput.lineLengthNum, spamMode);
 		}
 	})()
 
@@ -72,7 +93,7 @@
 
 <main>
 	<h1>Wiggle generator</h1>
-	<p>Superimpose ascii chacracters on a sine wave :P</p>
+	<p>Superimpose ascii chacracters on a sine wave.</p>
 	<div id="input-options">
 			<div class="row">
 				<div class="split">
@@ -91,9 +112,9 @@
 				</div>
 				<div class="split">
 					<div id="line-count-wrapper" class="wrapper">
-						<label for="line-count">Line count</label>
+						<label for="line-count">{lineCountInputLabel}</label>
 						<input type="Text" name="line-count" id="line-count" bind:value={lineCount}>
-						<span class="tooltip">Number of lines of generated text</span>
+						<span class="tooltip">{lineCountHelperText}</span>
 					</div>
 				</div>
 		</div>
@@ -101,7 +122,17 @@
 			<input type="text" name="wiggle-text" id="wiggle-text" placeholder="wiggle" bind:value={text}>
 		</div>
 	</div>
-	<button type="button" name="button" id="copy-button" on:click={copyOutput}>{copyButtonText}</button>
+	<div class="split-2">
+		<button type="button" name="button" id="copy-button" on:click={copyOutput}>{copyButtonText}</button>
+		<div id="spam-mode-wrapper">
+			<label for="togBt">Spam mode</label>
+			<label class="switch">
+				<input type="checkbox" id="togBtn" on:click={spamModeToggle}>
+				<div class="slider round"></div>
+			</label>
+			<span class="tooltip">When enabled, output can be concatenated without discontinuity</span>
+		</div>
+	</div>
 	<div id="output-wrapper">
 		<p id="output" contenteditable="false" >{output}</p>
 	</div>
@@ -131,6 +162,9 @@
 		--heading-text: #69DC9E;
 		--input-border: #69DC9E;
 
+		--toggle-off: #3B7455;
+		--toggle-on: #69DC9E; 
+
 		--shadow-lowered: 0px 2px 4px rgba(0, 0, 0, 0.2);
 		--shadow-medium-high: 0px 4px 8px rgba(0, 0, 0, 0.4);
 		--shadow-raised: 0px 8px 15px rgba(0, 0, 0, 0.4);
@@ -146,11 +180,15 @@
 		--heading-text: rgb(0, 0, 0);
 		--input-border: #BCB8B1;
 
+		--toggle-off: #BCB8B1;
+		--toggle-on: #3A3430;
+
 		--shadow-lowered: 0px 2px 4px rgba(0, 0, 0, 0.15);
 		--shadow-medium-high: 0px 4px 8px rgba(0, 0, 0, 0.3);
 		--shadow-raised: 0px 8px 15px rgba(0, 0, 0, 0.3);
 	}
 
+	/*forgot url again :skull::skull:*/
 	:global(.theme-dark) {
 		--bg: #0D0E0D;
 		--bg-2: #358471;
@@ -160,17 +198,19 @@
 		--heading-text: #DCE1DE;
 		--input-border: #358471;
 
-		--shadow-lowered: 0px 2px 4px rgba(0, 0, 0, 0.3);
-		--shadow-medium-high: 0px 4px 8px rgba(0, 0, 0, 0.6);
-		--shadow-raised: 0px 8px 15px rgba(0, 0, 0, 0.6);
+		--toggle-off: #0D0E0D;;
+		--toggle-on: #358471;;
+
+		--shadow-lowered: 0px 2px 4px rgba(0, 0, 0, 0.6);
+		--shadow-medium-high: 0px 4px 8px rgba(0, 0, 0, 0.8);
+		--shadow-raised: 0px 8px 15px rgba(0, 0, 0, 0.8);
 	}
 
 	:global(body) {
 		background-color: var(--bg);
 		padding: 0;
-		transition: background-color 300ms ease;
-		transition-delay: 100ms;
 	}
+
 	main {
 		background-color: var(--bg-main);
 		position: absolute;
@@ -184,6 +224,18 @@
 		padding-right: 2%;
 		padding-left: 2%;
 		padding-bottom: 0.8rem;
+		animation: load-anim 300ms ease;
+		animation-fill-mode: forwards;
+		opacity: 0.5;
+	}
+
+	@keyframes load-anim {
+		from {
+			opacity: 0.5;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 
 	h1 {
@@ -212,7 +264,7 @@
 		margin-bottom: 2px;
 	}
 
-	input {
+	input[type="text"] {
 		position: relative;
 		background-color: rgba(0, 0, 0, 0);
 		color: var(--text);
@@ -225,23 +277,15 @@
 	}
 
 
-	input:hover {
+	input[type="text"]:hover {
 		box-shadow: var(--shadow-medium-high);
 	}
 
-	input:focus {
+	input[type="text"]:focus {
 		box-shadow: var(--shadow-raised);
 		transform: translateY(-2%);
 		border-color: rgba(0, 0, 0, 0);
 		outline: 1px solid var(--input-border);
-	}
-
-	#column {
-		display: flex;
-		align-items: stretch;
-		width: 100%;
-		flex-direction: column;
-		justify-content: center;
 	}
 
 	.row {
@@ -257,8 +301,16 @@
 	.split {
 		display: grid;
 		place-items: center;
-		width: 50%;
+		width: 100%;
 		height: 100%;
+	}
+
+	.split-2 {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
 	}
 
 	.wrapper {
@@ -287,13 +339,16 @@
 
 		position: absolute;
 		right: 0%;
-		bottom: 50%;
 		text-align:left;
 
 		opacity: 0;
 		pointer-events: none;
 
 		transition: all 100ms ease-in-out;
+	}
+
+	.wrapper .tooltip {
+		bottom: 70%;
 		max-width: 60%;
 	}
 
@@ -303,7 +358,7 @@
 		pointer-events: all;
 	}
 
-	input:focus + .tooltip {
+	input[type="text"]:focus + .tooltip {
 		bottom: 80%;
 		opacity: 0.95;
 		pointer-events: all;
@@ -382,7 +437,7 @@
 		position: fixed;
 		bottom: 1rem;
 		left: calc(50% - 2rem);
-		background-color: var(--bg);
+		background-color: rgba(0, 0, 0, 0);
 		width: 4rem;
 		height: 4rem;
 		border: 0;
@@ -395,7 +450,7 @@
 
 		cursor: pointer;
 
-		transition: all 200ms ease;
+		transition: all 150ms ease;
 	}
 
 	#theme-switcher svg {
@@ -405,7 +460,12 @@
 	}
 
 	#theme-switcher:hover {
+		background-color: var(--bg);
 		opacity: 0.7;
+	}
+
+	#theme-switcher:active {
+		transform: scale(0.75);
 	}
 
 	/* lol */
@@ -450,6 +510,78 @@
 		margin-bottom: 0.4rem;
 	}
 
+	.switch {
+		position: relative;
+		display: inline-block;
+		width: 4rem;
+		height: 2rem;
+	}
+
+	.switch input[type="checkbox"] {display:none;}
+
+	.slider {
+		position: absolute;
+		cursor: pointer;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background-color: var(--toggle-off);
+		-webkit-transition: .2s;
+		transition: .2s;
+		border-radius: 1rem;
+	}
+
+	.slider:before {
+		position: absolute;
+		content: "";
+		height: 1.6rem;
+		width: 1.6rem;
+		left: 0.2rem;
+		bottom: 0.2rem;
+		background-color: var(--text-2);
+		transition: 150ms;
+		border-radius: 0.9rem;
+		box-shadow: var(--shadow-medium-high);
+	}
+
+	input[type="checkbox"]:checked + .slider {
+		background-color: var(--toggle-on);
+	}
+
+	input[type="checkbox"]:active + .slider:before {
+		box-shadow: var(--shadow-raised);
+		width: 3rem;
+	}
+
+	input[type="checkbox"]:active:checked + .slider:before {
+		transform: translateX(calc(2rem - 1.4rem));
+	}
+
+	input[type="checkbox"]:checked + .slider:before {
+		transform: translateX(2rem);
+	}
+
+	#spam-mode-wrapper {
+		position: relative;
+		display: flex;
+		align-items: flex-end;
+		justify-content: space-around;
+		flex-direction: column;
+		margin-right: 2%;
+	}
+
+	#spam-mode-wrapper .tooltip {
+		top: 100%;
+		width: 200%;
+	}
+
+	#spam-mode-wrapper:hover .tooltip {
+		top: 110%;
+		opacity: 0.95;
+		pointer-events: all;
+	}
+
 	@media only screen and (max-width: 840px) {
 		main {
 			left: 0;
@@ -465,7 +597,7 @@
 			left: 5%;
 		}
 
-		.tooltip {
+		.wrapper .tooltip {
 			max-width: 100%;
 		}
 
@@ -473,7 +605,7 @@
 			bottom: 100%;
 		}
 
-		input:focus + .tooltip {
+		input[type="text"]:focus + .tooltip {
 			bottom: 100%;
 		}
 	}
