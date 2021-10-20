@@ -38,7 +38,6 @@ input, button, select, textarea {
 	box-sizing: border-box;
 	border: 1px solid #ccc;
 	border-radius: 2px;
-        -webkit-tap-highlight-color: transparent;
 }
 
 input:disabled {
@@ -61,4 +60,8 @@ button:not(:disabled):active {
 
 button:focus {
 	border-color: #666;
+}
+
+* {
+	-webkit-tap-highlight-color: transparent;
 }
