@@ -39,7 +39,7 @@
 
 	$: _ = (async () => {
 		let validatedInput;
-		
+
 		if (isNumber(wiggleRate) && isNumber(lineCount) && isNumber(lineLength)) {
 			const wiggleRateNum = parseFloat(wiggleRate);
 			const lineCountNum = parseInt(lineCount);
@@ -163,7 +163,7 @@
 		--input-border: #69DC9E;
 
 		--toggle-off: #3B7455;
-		--toggle-on: #69DC9E; 
+		--toggle-on: #69DC9E;
 
 		--shadow-lowered: 0px 2px 4px rgba(0, 0, 0, 0.2);
 		--shadow-medium-high: 0px 4px 8px rgba(0, 0, 0, 0.4);
@@ -528,7 +528,7 @@
 		bottom: 0;
 		background-color: var(--toggle-off);
 		-webkit-transition: .2s;
-		transition: .2s;
+		transition: .2s ease-in-out;
 		border-radius: 1rem;
 	}
 
@@ -540,7 +540,7 @@
 		left: 0.2rem;
 		bottom: 0.2rem;
 		background-color: var(--text-2);
-		transition: 150ms;
+		transition: 150ms ease-in-out;
 		border-radius: 0.9rem;
 		box-shadow: var(--shadow-medium-high);
 	}
