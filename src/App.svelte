@@ -100,14 +100,12 @@
 					<div id="wiggle-rate-wrapper" class="wrapper">
 						<label for="wiggle-text">Wiggle rate</label>
 						<input type="text" bind:value={wiggleRate} name="wiggle-rate" id="wiggle-rate">
-						<span class="tooltip">Like wavelength</span>
 					</div>
 				</div>
 				<div class="split">
 					<div id="line-length-wrapper" class="wrapper">
 						<label for="line-length">Line length</label>
 						<input type="text" name="line-length" id="line-length" bind:value={lineLength}>
-						<span class="tooltip">Maximum length of a line</span>
 					</div>
 				</div>
 				<div class="split">
