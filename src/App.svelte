@@ -343,6 +343,8 @@
 		pointer-events: none;
 
 		transition: all 100ms ease-in-out;
+		
+		z-index: 10;
 	}
 
 	.wrapper .tooltip {
